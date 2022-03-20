@@ -1,9 +1,37 @@
 import { Button, Card, CardContent, TextField, Typography } from '@mui/material';
 import { Box, width } from '@mui/system';
-import React from 'react'
+import React, { useState } from 'react'
+import useForm from '../hooks/useForm';
 import Center from './Center';
 
+const getFreshModel = () => ({
+    name: '',
+    email: ''
+});
+
 export default function Login() {
+
+    const {
+        values,
+        setValues,
+        errors,
+        setErrors,
+        handleInputChange
+    } = useForm(getFreshModel);
+
+    const login = e => {
+        e.preventDefault();
+        if (validate())
+            console.log(values);
+    }
+
+    const validate = () => {
+        let temp = {};
+        temp.email = (/\S+@\S+\.\S+/).test(values.email) ? "" : "Email is not valid";
+        temp.name = values.name != "" ? "" : "Name is required";
+        setErrors(temp);
+        return Object.values(temp).every(x => x == "");
+    }
 
     return (
         <Center>
@@ -16,15 +44,23 @@ export default function Login() {
                             width: '90%'
                         }
                     }}>
-                        <form autoComplete='off'>
+                        <form autoComplete='off' onSubmit={login}>
                             <TextField
                                 label='Email'
                                 name='email'
-                                variant='outlined' />
+                                value={values.email}
+                                onChange={handleInputChange}
+                                variant='outlined'
+                                {...(errors.email && { error: true, helperText: errors.email })}
+                            />
                             <TextField
                                 label='Name'
                                 name='name'
-                                variant='outlined' />
+                                value={values.name}
+                                onChange={handleInputChange}
+                                variant='outlined'
+                                {...(errors.name && { error: true, helperText: errors.name })}
+                            />
                             <Button
                                 type='submit'
                                 variant='contained'
