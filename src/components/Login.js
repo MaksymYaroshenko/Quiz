@@ -1,8 +1,10 @@
 import { Button, Card, CardContent, TextField, Typography } from '@mui/material';
 import { Box, width } from '@mui/system';
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { createAPIEndpoint, ENDPOINTS } from '../api';
 import useForm from '../hooks/useForm';
+import useStateContext from '../hooks/useStateContext';
 import Center from './Center';
 
 const getFreshModel = () => ({
@@ -11,6 +13,9 @@ const getFreshModel = () => ({
 });
 
 export default function Login() {
+
+    const { context, setContext } = useStateContext();
+    const navigate = useNavigate();
 
     const {
         values,
@@ -25,7 +30,10 @@ export default function Login() {
         if (validate())
             createAPIEndpoint(ENDPOINTS.participant)
                 .post(values)
-                .then(res => console.log(res))
+                .then(res => {
+                    setContext({ participantId: res.data.participantId })
+                    navigate("/quiz")
+                })
                 .catch(error => console.log(error))
     }
 
