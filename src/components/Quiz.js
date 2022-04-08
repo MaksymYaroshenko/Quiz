@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardMedia, LinearProgress, List, ListItemButton, Typography } from "@mui/material";
 import { Box } from '@mui/system';
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { BASE_URL, createAPIEndpoint, ENDPOINTS } from "../api";
 import { getFormatedTime } from "../helper";
 import useStateContext, { stateContext } from "../hooks/useStateContext";
@@ -11,6 +12,7 @@ export default function Quiz() {
     const [questionIndex, setQuestionIndex] = useState(0);
     const [timeTaken, setTimeTaken] = useState(0);
     const { context, setContext } = useStateContext();
+    const navigate = useNavigate();
     let timer;
 
     const startTimer = () => {
@@ -31,10 +33,16 @@ export default function Quiz() {
             setQuestionIndex(questionIndex + 1);
         } else {
             setContext({ selectedOptions: [...temp], timeTaken });
+            navigate("/result");
         }
     }
 
     useEffect(() => {
+        setContext({
+            timeTaken: 0,
+            selectedOptions: []
+        })
+
         createAPIEndpoint(ENDPOINTS.question)
             .fetch()
             .then(res => {
@@ -63,7 +71,9 @@ export default function Quiz() {
                         {questions[questionIndex].questionName}
                     </Typography>
                     {questions[questionIndex].questionImage != null ?
-                        <CardMedia component="img" image={BASE_URL + 'images/' + questions[questionIndex].questionImage} />
+                        <CardMedia component="img"
+                            image={BASE_URL + 'images/' + questions[questionIndex].questionImage}
+                            sx={{ width: 'auto', m: '10px auto' }} />
                         :
                         null
                     }
