@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import useStateContext from "../hooks/useStateContext";
 
-export default function Layout() {
+function Layout() {
     const { resetContex } = useStateContext();
     const navigate = useNavigate();
 
@@ -28,3 +28,5 @@ export default function Layout() {
         </>
     )
 }
+
+export default Layout

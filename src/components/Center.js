@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import React from "react";
 
-export default function Center(props) {
+function Center(props) {
 
     return (
         <Grid container
@@ -15,3 +15,5 @@ export default function Center(props) {
         </Grid>
     );
 }
+
+export default Center

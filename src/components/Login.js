@@ -12,7 +12,7 @@ const getFreshModel = () => ({
     email: ''
 });
 
-export default function Login() {
+function Login() {
 
     const { context, setContext, resetContex } = useStateContext();
     const navigate = useNavigate();
@@ -89,3 +89,5 @@ export default function Login() {
         </Center>
     );
 }
+
+export default Login
