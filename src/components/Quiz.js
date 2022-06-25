@@ -6,7 +6,7 @@ import { BASE_URL, createAPIEndpoint, ENDPOINTS } from "../api";
 import { getFormatedTime } from "../helper";
 import useStateContext, { stateContext } from "../hooks/useStateContext";
 
-export default function Quiz() {
+function Quiz() {
 
     const [questions, setQuestions] = useState([]);
     const [questionIndex, setQuestionIndex] = useState(0);
@@ -92,3 +92,5 @@ export default function Quiz() {
             null
     )
 }
+
+export default Quiz
