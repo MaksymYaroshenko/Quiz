@@ -4,11 +4,11 @@ import { Outlet, useNavigate } from "react-router-dom";
 import useStateContext from "../hooks/useStateContext";
 
 export default function Layout() {
-    const { resetContext } = useStateContext();
+    const { resetContex } = useStateContext();
     const navigate = useNavigate();
 
     const logout = () => {
-        resetContext();
+        resetContex();
         navigate("/");
     }
 
